@@ -10,10 +10,20 @@ fi
 echo "Enter the link to the LeetCode problem:"
 read -r PROBLEM_LINK
 
+# Prompt for the difficulty level
+echo "Enter the difficulty level (easy, medium, hard):"
+read -r DIFFICULTY
+
 # Variables
 PROBLEM_NAME=$1
-BASE_DIR=~/summer_grind/leetcode/easy
-PROBLEM_DIR="$BASE_DIR/$PROBLEM_NAME"
+BASE_DIR=~/summer_grind/leetcode
+PROBLEM_DIR="$BASE_DIR/$DIFFICULTY/$PROBLEM_NAME"
+
+# Validate difficulty level
+if [[ "$DIFFICULTY" != "easy" && "$DIFFICULTY" != "medium" && "$DIFFICULTY" != "hard" ]]; then
+  echo "Invalid difficulty level. Please enter one of: easy, medium, hard."
+  exit 1
+fi
 
 # Create directories and files
 mkdir -p "$PROBLEM_DIR"
@@ -26,7 +36,7 @@ echo "Problem link added to q.txt"
 # Git commands
 cd ~/summer_grind || exit
 git add .
-git commit -m "Added problem $PROBLEM_NAME"
+git commit -m "Added problem $PROBLEM_NAME with difficulty $DIFFICULTY"
 git push origin leetcode
 
 echo "Changes committed and pushed to GitHub."
